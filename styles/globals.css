@@ -10,9 +10,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-priamry: #333;
+  --color-priamry: #333333;
   --color-secondary: #d2d2d2;
   --color-accent: #e73434;
+  --color-calendar: #a1a1a1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,16 +26,6 @@
 @layer base {
   html {
     font-family: var(--font-ptd-r), sans-serif;
-  }
-
-  .font-ptd-b {
-    font-family: var(--font-ptd-b);
-  }
-  .font-ptd-m {
-    font-family: var(--font-ptd-m);
-  }
-  .font-ptd-l {
-    font-family: var(--font-ptd-l);
   }
 }
 
@@ -54,6 +45,11 @@
     border-right: 1px solid var(--color-secondary) !important;
     border-bottom: 1px solid var(--color-secondary) !important;
   }
+
+  .week-list:nth-child(1),
+  .week-list:nth-child(7) {
+    color: #ccc;
+  }
 }
 
 @layer utilities {
@@ -63,6 +59,16 @@
 
   .grid-rows-custom {
     grid-template-rows: 100px;
+  }
+
+  .font-ptd-b {
+    font-family: var(--font-ptd-b);
+  }
+  .font-ptd-m {
+    font-family: var(--font-ptd-m);
+  }
+  .font-ptd-l {
+    font-family: var(--font-ptd-l);
   }
 }
 

@@ -13,7 +13,7 @@ function CalendarGrid({ month, year }: CalendarGridProps) {
   const totalDaysInMonth = lastDayOfMonth.date(); // 해당 월의 총 일 수
   console.log(totalDaysInMonth);
 
-  // 35개의 박스를 채우기 위한 빈 배열
+  // 42개의 박스를 채우기 위한 빈 배열
   const totalGridCells = 42;
 
   // 날짜 배열 생성 (앞부분 공백 + 해당 월 날짜 + 뒷부분 공백)
@@ -24,15 +24,13 @@ function CalendarGrid({ month, year }: CalendarGridProps) {
       : null; // 날짜가 없는 칸은 `null`
   });
 
-  console.log(tempDates);
-
   return (
-    <div className="mt-6">
-      <ul className="grid grid-cols-7 w-[770px] h-full border-t-2 border-primary border-l border-secondary">
+    <div className="border-t-2 border-priamry">
+      <ul className="grid grid-cols-7 w-[770px] border-l border-secondary">
         {tempDates.map((date, index) => (
           <li
             key={index}
-            className="flex justify-end w-[110px] h-[100px] p-[10px] border-b border-r border-secondary box-border text-sm"
+            className={`flex justify-end w-[110px] h-[100px] p-[10px] border-b border-r border-secondary box-border text-sm text-calendar ${date && date.isSame(dayjs(new Date()), "day") ? "text-priamry font-ptd-m" : "text-calendar"}`}
           >
             {date ? date.date() : ""}
           </li>

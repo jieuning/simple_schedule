@@ -1,5 +1,7 @@
 "use client";
 
+import dayjs from "dayjs";
+import "dayjs/locale/en";
 import { useEffect, useState } from "react";
 import CalendarGrid from "./CalendarGrid";
 
@@ -12,7 +14,21 @@ function MyCalendar() {
 
   if (!isClient) return null; // 서버에서는 아무것도 렌더링하지 않음
 
-  return <CalendarGrid month={3} year={2025} />;
+  return (
+    <div className="mt-6">
+      <ul className="flex mb-1.5">
+        {Array.from({ length: 7 }).map((_, index) => (
+          <li
+            key={index}
+            className="flex justify-center w-[110px] text-sm week-list"
+          >
+            {dayjs().day(index).locale("en").format("ddd")}
+          </li>
+        ))}
+      </ul>
+      <CalendarGrid month={3} year={2025} />
+    </div>
+  );
 }
 
 export default MyCalendar;
