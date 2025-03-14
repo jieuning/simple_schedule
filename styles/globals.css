@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-priamry: #333;
+  --color-secondary: #d2d2d2;
+  --color-accent: #e73434;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--font-ptd-r), sans-serif;
+  }
+
+  .font-ptd-b {
+    font-family: var(--font-ptd-b);
+  }
+  .font-ptd-m {
+    font-family: var(--font-ptd-m);
+  }
+  .font-ptd-l {
+    font-family: var(--font-ptd-l);
+  }
+}
+
+@layer components {
+  .react-calendar {
+    width: 776px !important;
+    font-family: var(--font-ptd-r) !important;
+    border: none !important;
+  }
+
+  .react-calendar__month-view__days {
+    border-top: 2px solid var(--color-secondary);
+    border-left: 1px solid var(--color-secondary);
+  }
+
+  .react-calendar__month-view__days button {
+    border-right: 1px solid var(--color-secondary) !important;
+    border-bottom: 1px solid var(--color-secondary) !important;
+  }
+}
+
+@layer utilities {
+  .grid-cols-custom-7 {
+    grid-template-columns: repeat(7, 110px);
+  }
+
+  .grid-rows-custom {
+    grid-template-rows: 100px;
+  }
+}
+
+body {
+  background: var(--background);
+  color: #333;
+  box-sizing: border-box;
+}
