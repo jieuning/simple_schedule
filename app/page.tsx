@@ -1,4 +1,5 @@
-// import Image from "next/image";
+"use client";
+
 import MyCalendar from "@/components/MyCalendar";
 import YearMonthSelector from "@/components/YearMonthSelector";
 import MyTodoList from "@/components/MyTodoList";

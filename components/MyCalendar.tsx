@@ -4,9 +4,15 @@ import dayjs from "dayjs";
 import "dayjs/locale/en";
 import { useEffect, useState } from "react";
 import CalendarGrid from "./CalendarGrid";
+// store
+import { useYearStore } from "@/store/store";
+import { useMonthStore } from "@/store/store";
 
 function MyCalendar() {
   const [isClient, setIsClient] = useState(false);
+  // store값 가져옴
+  const { selectedYear } = useYearStore();
+  const { selectedMonth } = useMonthStore();
 
   useEffect(() => {
     setIsClient(true); // 컴포넌트가 마운트된 후 클라이언트에서만 렌더링
@@ -26,7 +32,7 @@ function MyCalendar() {
           </li>
         ))}
       </ul>
-      <CalendarGrid month={3} year={2025} />
+      <CalendarGrid month={selectedMonth} year={selectedYear} />
     </div>
   );
 }
