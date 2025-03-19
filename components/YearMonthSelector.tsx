@@ -11,7 +11,7 @@ function YearMonthSelector() {
   const [yearModal, setYearModal] = useState<boolean>(false);
   // store값 가져오기
   const { selectedYear, setSelectedYear } = useYearStore();
-  const { setMonth } = useMonthStore();
+  const { selectedMonth, setMonth } = useMonthStore();
 
   const monthOptions = Array.from({ length: 12 }, (_, index) => ({
     value: index + 1,
@@ -39,7 +39,7 @@ function YearMonthSelector() {
           <li
             onClick={() => setMonth(month.value)}
             key={month.value}
-            className="flex items-center cursor-pointer"
+            className={`flex items-center cursor-pointer ${selectedMonth === month.value ? "text-priamry font-ptd-m" : "text-[#ccc]"} hover:text-priamry`}
           >
             {month.label}
             <span className="inline-block w-px h-3.5 ml-4 bg-secondary"></span>
