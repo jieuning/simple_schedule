@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const todoSchma = new mongoose.Schema({
-  date: { type: Date, required: true },
+  date: { type: Date, required: true, unique: true },
   todos: [
     {
-      content: { type: String, required: true },
+      task: { type: String, required: true },
       isCompleted: { type: Boolean, default: false },
     },
   ],
