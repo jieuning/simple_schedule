@@ -8,6 +8,7 @@ const todoSchma = new mongoose.Schema({
       isCompleted: { type: Boolean, default: false },
     },
   ],
+  default: [],
 });
 
 module.exports = mongoose.model("todo", todoSchma);

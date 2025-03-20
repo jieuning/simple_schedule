@@ -3,9 +3,10 @@ const {
   getTodos,
   addTodo,
   toggleTodoStatus,
+  deleteTodo,
 } = require("../controllers/todoController");
 
-const router = express.Router;
+const router = express.Router();
 
 // 전체 todo 가져오기
 router.get("/", getTodos);

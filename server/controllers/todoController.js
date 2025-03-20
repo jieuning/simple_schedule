@@ -1,4 +1,4 @@
-const Todo = require("../models/scheduleSchema");
+const Todo = require("../models/todoSchema");
 
 // 모든 todo 조회
 exports.getTodos = async (req, res) => {
@@ -6,7 +6,9 @@ exports.getTodos = async (req, res) => {
     const todos = await Todo.find();
     res.json(todos);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching users", error });
+    res
+      .status(500)
+      .json({ message: "할 일 목록을 불러오는 중 오류 발생", error });
   }
 };
 
@@ -20,17 +22,21 @@ exports.addTodo = async (req, res) => {
 
     // 해당 날짜가 존재하면 기존 배열에 추가
     if (findTodo) {
-      existingTodo.todos.push({ task, isCompleted: false });
-      await existingTodo.save();
+      if (!findTodo.todos) {
+        findTodo.todos = [];
+      }
+
+      findTodo.todos.push({ task, isCompleted: false });
+      await findTodo.save();
       return res
         .status(200)
-        .json({ message: "추가되었습니다.", todo: existingTodo });
+        .json({ message: "추가되었습니다.", todo: findTodo });
     }
 
     // 해당 날짜가 없으면 새로 생성
     const newTodo = new Todo({
       date,
-      todos: [{ task, isCompleted: false }],
+      todos: [{ task: task, isCompleted: false }],
     });
     await newTodo.save();
 
@@ -53,13 +59,13 @@ exports.toggleTodoStatus = async (req, res) => {
     if (!todoEntry) {
       return res
         .status(404)
-        .json({ massage: "해당 날짜의 todo가 존재하지 않습니다." });
+        .json({ message: "해당 날짜의 todo가 존재하지 않습니다." });
     }
 
     // 해당 날짜의 todo안의 task를 찾을 수 없을 때
     let foundTask = todoEntry.todos.find((t) => t.task === task);
     if (!foundTask) {
-      return res.status(404).json({ messge: "해당 task를 찾을 수 없습니다." });
+      return res.status(404).json({ message: "해당 task를 찾을 수 없습니다." });
     }
 
     // 해당 task의 상태가 변경될 때
@@ -100,7 +106,7 @@ exports.deleteTodo = async (req, res) => {
 
     // 만약 모든 할 일이 삭제되었다면 해당 날짜의 Todo 문서도 삭제
     if (todoEntry.todos.length === 0) {
-      await Todo.deleteOne({ date });
+      await Todo.deleteOne({ date: new Date(date) });
       return res.status(200).json({
         message: "모든 할 일이 삭제되어 해당 날짜의 todo도 삭제되었습니다.",
       });
