@@ -26,6 +26,12 @@ const pretendardRegular = localFont({
   variable: "--font-ptd-r",
 });
 
+const efDiary = localFont({
+  src: "../public/fonts/EF_Diary.ttf",
+  display: "swap",
+  variable: "--font-diary",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${pretendardRegular.variable} ${pretendardMedium.variable} ${pretendardBold.variable} ${pretendardLight.variable}`}
+      className={`${pretendardRegular.variable} ${pretendardMedium.variable} ${pretendardBold.variable} ${pretendardLight.variable} ${efDiary.variable}`}
     >
       <body>{children}</body>
     </html>

@@ -1,4 +1,7 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import clsx from "clsx";
+import { useAllTodos, useSelectedTodos } from "@/store/store";
+import { useState } from "react";
 
 interface CalendarGridProps {
   month: number;
@@ -37,6 +40,25 @@ function CalendarGrid({ month, year }: CalendarGridProps) {
     }
   });
 
+  // store 가져옴
+  const setSelectedTodos = useSelectedTodos((state) => state.setSelectedTodos);
+  const AllTodos = useAllTodos((state) => state.AllTodos);
+
+  // 선택된 날짜를 표시하기 위해 저장
+  const [clickedIndex, setclickedIndex] = useState<number | null>(null);
+
+  // 선택된 날짜와 모든 투두 날짜 중에 같은 날짜 찾기
+  const onclickHandler = (selectedDate: Dayjs, index: number) => {
+    const selectedFormat = selectedDate.format("YYYY-MM-DD");
+    const selectedTodo = AllTodos?.find(
+      (todo) => dayjs(todo.date).format("YYYY-MM-DD") === selectedFormat
+    );
+    setclickedIndex(index);
+    return selectedTodo
+      ? setSelectedTodos(selectedTodo)
+      : setSelectedTodos(null);
+  };
+
   return (
     <div className="border-t-2 border-primary">
       <ul className="grid grid-cols-7 w-[771px] border-l border-secondary">
@@ -45,7 +67,8 @@ function CalendarGrid({ month, year }: CalendarGridProps) {
           return (
             <li
               key={index}
-              className={`flex justify-end w-[110px] h-[100px] p-[10px] border-b border-r border-secondary box-border text-sm ${
+              onClick={() => onclickHandler(date, index)}
+              className={`relative flex justify-end w-[110px] h-[100px] p-[10px] border-b border-r border-secondary box-border text-sm ${
                 date.isSame(dayjs(new Date()), "day")
                   ? "text-primary font-bold"
                   : isCurrentMonth
@@ -55,7 +78,13 @@ function CalendarGrid({ month, year }: CalendarGridProps) {
               ${date.day() === 0 || date.day() === 6 ? "bg-[#FBFBFB]" : "bg-white"}
               `}
             >
-              {date.date()}
+              <span className="z-10 cursor-pointer">{date.date()}</span>
+              <span
+                className={clsx(
+                  "absolute top-0 left-0 w-full h-full",
+                  clickedIndex === index && "bg-[#FFDC92]"
+                )}
+              ></span>
             </li>
           );
         })}

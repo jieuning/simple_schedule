@@ -71,6 +71,9 @@
   .font-ptd-l {
     font-family: var(--font-ptd-l);
   }
+  .font-diary {
+    font-family: var(--font-diary);
+  }
 }
 
 body {

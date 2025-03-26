@@ -4,7 +4,7 @@ const Todo = require("../models/todoSchema");
 exports.getTodos = async (req, res) => {
   try {
     const todos = await Todo.find();
-    res.json(todos);
+    res.status(200).json(todos);
   } catch (error) {
     res
       .status(500)
@@ -14,19 +14,18 @@ exports.getTodos = async (req, res) => {
 
 // 새로운 혹은 기존 날짜에 todo 추가
 exports.addTodo = async (req, res) => {
-  const { date, task } = req.body;
+  const { date, endDate, task } = req.body;
 
   try {
-    // 해당 날짜의 todo가 존재하는지 확인
+    // 해당 날짜가 존재하면 기존 배열에 추가
     const findTodo = await Todo.findOne({ date });
 
-    // 해당 날짜가 존재하면 기존 배열에 추가
     if (findTodo) {
-      if (!findTodo.todos) {
-        findTodo.todos = [];
-      }
-
-      findTodo.todos.push({ task, isCompleted: false });
+      findTodo.todos.push({
+        endDate,
+        task,
+        isCompleted: false,
+      });
       await findTodo.save();
       return res
         .status(200)
@@ -36,15 +35,17 @@ exports.addTodo = async (req, res) => {
     // 해당 날짜가 없으면 새로 생성
     const newTodo = new Todo({
       date,
-      todos: [{ task: task, isCompleted: false }],
+      todos: [{ endDate, task, isCompleted: false }],
     });
     await newTodo.save();
-
     res
       .status(201)
       .json({ message: "새로운 날짜에 추가되었습니다.", todo: newTodo });
   } catch (error) {
-    res.status(500).json({ message: "할일 추가 중 오류 발생", error });
+    console.error("서버 에러 발생:");
+    console.error("에러 이름:", error.name);
+    console.error("에러 메시지:", error.message);
+    console.error("전체 에러 객체:", error);
   }
 };
 
