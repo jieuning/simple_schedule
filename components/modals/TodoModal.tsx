@@ -49,7 +49,7 @@ function TodoModal({ setTodoModal, onTodoAdded }: TodoModalProps) {
   };
 
   return (
-    <div className="fixed flex items-center justify-center inset-0 backdrop-blur-xs bg-black/5 z-10">
+    <div className="fixed flex items-center justify-center inset-0 backdrop-blur-xs bg-black/5 z-30">
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-xs bg-white rounded-md">
         <div className="flex items-center justify-between p-2 text-sm border-b border-[#ccc] font-ptd-m">
           <h2>할일 생성</h2>

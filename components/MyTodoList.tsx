@@ -19,14 +19,11 @@ type TodoTask = {
 };
 
 function MyTodoList() {
-  const [todos, setTodos] = useState<AllTodo[]>([]);
   const [todoModal, setTodoModal] = useState<boolean>(false);
 
   // store 가져옴
   const selectedTodos = useSelectedTodos((state) => state.selectedTodos);
   const setAllTodos = useAllTodos((state) => state.setAllTodos);
-
-  console.log(selectedTodos);
 
   const fetchData = async () => {
     try {
@@ -40,10 +37,6 @@ function MyTodoList() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
 
   return (
     <div className="mt-6 ">

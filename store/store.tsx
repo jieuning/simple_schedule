@@ -24,7 +24,7 @@ type SelectedTodoStore = {
 };
 
 type useAllTodosStore = {
-  AllTodos: AllTodos[] | null;
+  allTodos: AllTodos[] | null;
   setAllTodos: (selectedDateTodo: AllTodos[] | null) => void;
 };
 
@@ -69,6 +69,6 @@ export const useSelectedTodos = create<SelectedTodoStore>((set) => ({
 
 // 모든 todo
 export const useAllTodos = create<useAllTodosStore>((set) => ({
-  AllTodos: [],
-  setAllTodos: (todos) => set({ AllTodos: todos }),
+  allTodos: [],
+  setAllTodos: (todos) => set({ allTodos: todos }),
 }));
